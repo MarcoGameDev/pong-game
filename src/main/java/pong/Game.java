@@ -45,8 +45,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
     
     public void startRound() {
-    	player = new Player(80, HEIGHT-5);
-        enemy = new Enemy(80, 0);
+    	player = new Player(WIDTH / 2 - 20, HEIGHT-5);
+        enemy = new Enemy(WIDTH / 2 - 20, 0);
         int startingBallX = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.x + (player.width / 2) : enemy.x + (enemy.width / 2);
         int startingBallY = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.y - player.height : enemy.y + enemy.height;
         ball = new Ball(startingBallX, startingBallY, score, this);
@@ -71,6 +71,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         player.render(g);
         enemy.render(g);
         ball.render(g);
+        score.render(g);
 
         g = bs.getDrawGraphics();
         g.drawImage(layer, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);

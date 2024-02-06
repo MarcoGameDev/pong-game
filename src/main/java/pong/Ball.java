@@ -17,7 +17,7 @@ public class Ball {
   public int width;
   public int height;
 
-  public Ball(int y, int x) {
+  public Ball(int x, int y) {
     this.x = x;
     this.y = y;
     this.width = 4;

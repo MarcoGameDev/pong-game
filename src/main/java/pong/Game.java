@@ -16,6 +16,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static int WIDTH = 160;
     public static int HEIGHT = 120;
     public static int SCALE = 3;
+    public static boolean isPaused = false;
 
     public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
@@ -23,6 +24,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Enemy enemy;
     public static Ball ball;
     public static Score score;
+    public static Thread thread;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -34,7 +36,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
-        new Thread(game).start();
+        thread = new Thread(game);
+        thread.start();
     }
 
     public Game() {
@@ -80,18 +83,25 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void run() {
-        while (true) {
-            this.requestFocus();
-            this.tick();
+        while (!Thread.currentThread().isInterrupted()) {
+        	if (Thread.currentThread().isInterrupted()) {
+        		break;
+        	}
+        	this.requestFocus();
+        	this.tick();
             this.render();
 
             try {
                 Thread.sleep(1000 / 60);
+            } catch (InterruptedException e) {
+            	Thread.currentThread().interrupt();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        
     }
+    
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -108,6 +118,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
             case KeyEvent.VK_LEFT:
                 player.left = true;
                 break;
+                
+            case KeyEvent.VK_ESCAPE:
+            	if (isPaused) {
+            		thread = new Thread(this);
+            		thread.start();
+            		isPaused = false;
+            		break;
+            	}
+            	
+            	thread.interrupt();
+            	isPaused = true;
+            	break;
         }
     }
 

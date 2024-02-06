@@ -50,8 +50,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void startRound() {
     	player = new Player(WIDTH / 2 - 20, HEIGHT-5);
         enemy = new Enemy(WIDTH / 2 - 20, 0);
-        int startingBallX = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.x + (player.width / 2) : enemy.x + (enemy.width / 2);
-        int startingBallY = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.y - player.height : enemy.y + enemy.height;
+        int startingBallX = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.x + (player.width / 2) : (int)enemy.x + (enemy.width / 2);
+        int startingBallY = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.y - player.height : (int)enemy.y + enemy.height;
         ball = new Ball(startingBallX, startingBallY, score, this);
     }
 

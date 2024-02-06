@@ -5,13 +5,13 @@ import java.awt.Color;
 
 public class Enemy {
 
-  public int x;
-  public int y;
+  public double x;
+  public double y;
 
   public int width;
   public int height;
 
-  public Enemy(int x, int y) {
+  public Enemy(double x, double y) {
     this.x = x;
     this.y = y;
     this.width = 40;
@@ -19,7 +19,7 @@ public class Enemy {
   }
   
   public void tick() {
-    this.x += (Game.ball.x - this.x - 6) * 0.07;
+    this.x += (Game.ball.x - this.x - 6) * 0.06;
   }
 
   public void render(Graphics g) {

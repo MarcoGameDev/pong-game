@@ -22,6 +22,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Player player;
     public static Enemy enemy;
     public static Ball ball;
+    public static Score score;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -37,11 +38,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public Game() {
-        this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+    	this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         this.addKeyListener(this);
-        player = new Player(80, HEIGHT-5);
+        score = new Score();
+    	this.startRound();
+    }
+    
+    public void startRound() {
+    	player = new Player(80, HEIGHT-5);
         enemy = new Enemy(80, 0);
-        ball = new Ball(80, player.y);
+        int startingBallX = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.x + (player.width / 2) : enemy.x + (enemy.width / 2);
+        int startingBallY = score.lastScore == EntityEnum.ENEMY || score.lastScore == null ? player.y - player.height : enemy.y + enemy.height;
+        ball = new Ball(startingBallX, startingBallY, score, this);
     }
 
     public void tick() {

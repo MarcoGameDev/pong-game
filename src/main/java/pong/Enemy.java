@@ -5,13 +5,13 @@ import java.awt.Color;
 
 public class Enemy {
 
-  public double x;
-  public double y;
+  public int x;
+  public int y;
 
   public int width;
   public int height;
 
-  public Enemy(double x, double y) {
+  public Enemy(int x, int y) {
     this.x = x;
     this.y = y;
     this.width = 40;

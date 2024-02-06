@@ -16,13 +16,18 @@ public class Ball {
 
   public int width;
   public int height;
+  
+  private Score score;
+  private Game game;
 
-  public Ball(int x, int y) {
+  public Ball(int x, int y, Score score, Game game) {
     this.x = x;
     this.y = y;
     this.width = 4;
     this.height = 4;
     this.speed = 1.7;
+    this.score = score;
+    this.game = game;
 
     int angle = new Random().nextInt(75) + 45;
     this.directionX = Math.cos(Math.toRadians(angle));
@@ -35,11 +40,11 @@ public class Ball {
     }
 
     if (this.y >= Game.HEIGHT) {
-      System.out.println("Enemy point!");
-      new Game();
+      this.score.addScore(EntityEnum.ENEMY);
+      this.game.startRound();
     } else if (this.y < 0) {
-      System.out.println("Player point!");
-      new Game();
+      this.score.addScore(EntityEnum.PLAYER);
+      this.game.startRound();
     }
 
     Rectangle bounds = new Rectangle((int) (this.x + (this.directionX*this.speed)), (int) (this.y + (this.directionY * this.speed)), this.width, this.height);
